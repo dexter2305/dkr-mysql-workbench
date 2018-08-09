@@ -1,0 +1,23 @@
+version: '3.4'
+
+services: 
+    mysql-workbench-service:
+        image: 'naveen/mysql-workbench'
+        build: ./
+        volumes:
+            - /tmp/.X11-unix:/tmp/.X11-unix
+            - ./mysql-workbench-workspace:/root/.mysql/workbench
+        environment:
+            - DISPLAY=unix$DISPLAY
+        container_name: mysql-workbench
+        networks:
+            - channel-network
+networks:
+    channel-network:
+        external:
+            name: b2b-network
+        
+            
+#volumes:
+ #   mysql-workbench-workspace:
+   #     name: ./mysql-workbench-workspace
