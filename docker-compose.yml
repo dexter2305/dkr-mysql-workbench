@@ -9,14 +9,20 @@ services:
             - ./mysql-workbench-workspace:/root/.mysql/workbench
         environment:
             - DISPLAY=unix$DISPLAY
-        container_name: mysql-workbench
-        networks:
-            - channel-network
-networks:
-    channel-network:
-        external:
-            name: b2b-network
-        
+        links:
+            - "db-server"
+        depends_on:
+            - "db-server"
+    db-server:
+        image: wm-b2b-mysql-5.7:test
+        container_name: 'b2b-db'
+        environment:
+            - MYSQL_ROOT_PASSWORD=my-secret-pw
+            - MYSQL_DATABASE=test-db
+        hostname: 'db-host'
+        ports:
+            - 3306:3306
+            
             
 #volumes:
  #   mysql-workbench-workspace:
